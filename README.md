@@ -1,6 +1,6 @@
 ### asset_sync
 ---
-https://github.com/oauth-xx/oauth2
+https://github.com/AssetSync/asset_sync
 
 ```
 ```
