@@ -13,6 +13,10 @@ rails g assets_sync:install --use-yml --provider=Rackspace
 rails g assets_sync:install --use-yml --provider=AWS
 rails g assets_sync:install --use-yml --provider=AzureRM
 
+export AWS_ACCESS_KEY_ID=xxx
+export AWS_SECRET_ACCESS_KEY=xxxx
+export FOG_DIRECTORY=xxxx
+
 foreman run rake
 ```
 
@@ -20,9 +24,18 @@ foreman run rake
 # config/environments/production.rb
 config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
-config.action_controller.asset_host = ""
+config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.storage.googleaps.com"
 
-config.action_controller.asset_host = ""
+config.action_controller.asset_host = "//#{ENV['AZURE_STORAGE_ACCOUNT_NAME']}.blob.core.windows.net/#{ENV['FOG_DIRECOTRY']}"
+
+config.action_controller.asset_host = "//s3.amazonaws.com/#{ENV['FOG_DIRECOTRY']}"
+
+config.action_controller.asset_host = "//storage.googleapis.com/#{ENV['FOG_DIRECOTRY']}"
+
+# config/environment/production.rb
+config.action+controller.asset_host = "//#{ENV['AZURE_STORAGE_ACCOUNT_NAME']}.blob.core.windows.net/#{ENV['FOG_DIRECOTRY']}"
+
+config.assets.prefix = "/production/assets"
 
 
 
@@ -161,7 +174,15 @@ test:
 production:
   <<: *defaults
   
-  
+heroku config:add AWS_ACCESS_KEY_ID=xxxx
+heroku config:add AWS_SECRET_ACCESS_KEY=xxxx
+heroku config.add FOG_DIRECOTRY=xxxx
+heroku config.add FOG_PROVIDER=AWS
+
+heroku config:add FOG_REGION=eu-west-1
+heroku config:add ASSET_SYNC_GZPI_COMPRESSION=true
+heroku config:add ASSET_MANIFEST=true
+heroku conifg:add ASSET_EXISTING_REMOTE_FILES=keep
 ```
 
 
