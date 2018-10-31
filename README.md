@@ -37,6 +37,13 @@ config.action+controller.asset_host = "//#{ENV['AZURE_STORAGE_ACCOUNT_NAME']}.bl
 
 config.assets.prefix = "/production/assets"
 
+AssetSync.configure do |config|
+  config.fog_provider = 'AWS'
+  config.fog_directory = ENV['FOG_DIRECTORY']
+  config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']
+  config.aws_secret_access_key = ENV['AWS_SECRET_ACCES_KEY']
+  
+end
 
 
 
